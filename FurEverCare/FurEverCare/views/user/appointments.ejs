@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Appointments</title>
+</head>
+<body>
+  <%- include('../partials/navbar', { title: 'Appointments' }) %>
+
+  <main class="container">
+    <h1>Your Appointments</h1>
+    <% if (appointments.length > 0) { %>
+      <div class="cards">
+        <% appointments.forEach(appointment => { %>
+          <div class="card">
+            <% if (appointment.doctor) { %>
+              <p><strong>Doctor:</strong> <%= appointment.doctor.name %> - <%= appointment.doctor.specialty %></p>
+            <% } else { %>
+              <p><strong>Doctor:</strong> Doctor information not available</p>
+            <% } %>
+            <p><strong>Date:</strong> <%= appointment.date.toDateString() %></p>
+            <p><strong>Status:</strong> <%= appointment.status %></p>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p>No appointments found.</p>
+    <% } %>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Approve Doctors</title>
+</head>
+<body>
+  <%- include('../partials/navbar', { title: 'Approve Doctors' }) %>
+
+  <main class="container">
+    <h1>Approve Doctors</h1>
+    <% if (doctors.length > 0) { %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Specialty</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% doctors.forEach(doctor => { %>
+              <tr>
+                <td><%= doctor.name %></td>
+                <td><%= doctor.email %></td>
+                <td><%= doctor.specialty %></td>
+                <td>
+                  <form action="/admin/approve-doctor/<%= doctor._id %>" method="POST">
+                    <button type="submit" class="btn">Approve</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <p>No doctors pending approval.</p>
+    <% } %>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

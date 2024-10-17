@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Approve Users</title>
+</head>
+<body>
+  <%- include('../partials/navbar', { title: 'Approve Users' }) %>
+
+  <main class="container">
+    <h1>Approvals</h1>
+    <% if (users.length > 0) { %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Approve</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(user => { %>
+              <tr>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td>
+                  <form action="/admin/approve-users/<%= user._id %>" method="POST">
+                    <button type="submit" class="btn">Approve</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <p>No users waiting for approval.</p>
+    <% } %>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

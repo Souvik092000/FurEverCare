@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+
+  <main class="container">
+    <h1>Login</h1>
+    <% if (error_msg) { %>
+      <p class="error"><%= error_msg %></p>
+    <% } %>
+    <form id="loginForm" action="/user/login" method="POST" class="form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </main>
+
+  <script>
+    $(document).ready(function() {
+      $('#loginForm').validate({
+        rules: {
+          email: {
+            required: true,
+            email: true
+          },
+          password: {
+            required: true,
+            minlength: 6
+          }
+        },
+        messages: {
+          email: 'Please enter a valid email address',
+          password: {
+            required: 'Please provide a password',
+            minlength: 'Your password must be at least 6 characters long'
+          }
+        }
+      });
+    });
+  </script>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title><%= product.name %></title>
+</head>
+<body>
+  <%- include('../partials/navbar', { title: product.name }) %>
+
+  <main class="container">
+    <div class="card product-card">
+      <img src="/images/<%= product.image %>" alt="<%= product.name %>" class="product-image">
+      <div class="card-content">
+        <h1><%= product.name %></h1>
+        <p><%= product.description %></p>
+        <p><strong>Price:</strong> $<%= product.price %></p>
+        <form action="/user/cart/add/<%= product._id %>" method="POST">
+          <button type="submit" class="btn">Add to Cart</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

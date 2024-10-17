@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <%- include('partials/navbar', { title: 'Home' }) %>
+
+  <main>
+    <div class="banner">
+      <h1>Welcome to FurEverCare</h1>
+      <p>Your one-stop solution for pet care.</p>
+    </div>
+
+    <div class="carousel">
+      <div class="carousel-container">
+        <div class="carousel-item active">
+          <img src="/images/slide1.webp" alt="Best Care For Pets">
+          <p>Best Care For Pets</p>
+        </div>
+        <div class="carousel-item">
+          <img src="/images/slide2.webp" alt="Comprehensive Services">
+          <p>Comprehensive Services</p>
+        </div>
+        <div class="carousel-item">
+          <img src="/images/slide3.jpeg" alt="Qualified Professionals">
+          <p>Qualified Professionals</p>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Discount Section -->
+    <div class="discount-card">
+      <h2><span class="typing-text"></span></h2>
+      <p>Don't miss out on our amazing deals and offers!</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <a href="/user/products"><img src="/images/card1.jpeg" alt="Quality Products"></a>
+        <h3>Quality Products</h3>
+        <p>We offer a wide range of quality products for your pets.</p>
+      </div>
+      <div class="card">
+        <img src="/images/card2.jpeg" alt="Experienced Doctors">
+        <h3>Experienced Doctors</h3>
+        <p>Our doctors are experienced and highly qualified.</p>
+      </div>
+      <div class="card">
+        <img src="/images/card3.jpeg" alt="Customer Support">
+        <h3>Customer Support</h3>
+        <p>We provide 24/7 customer support for all your queries.</p>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const carouselContainer = document.querySelector('.carousel-container');
+      const carouselItems = document.querySelectorAll('.carousel-item');
+      const prevButton = document.querySelector('.carousel-control.prev');
+      const nextButton = document.querySelector('.carousel-control.next');
+      let currentIndex = 0;
+
+      function updateCarousel() {
+        carouselItems.forEach((item, index) => {
+          item.classList.remove('active');
+          if (index === currentIndex) {
+            item.classList.add('active');
+          }
+        });
+      }
+
+      function showPrevSlide() {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : carouselItems.length - 1;
+        updateCarousel();
+      }
+
+      function showNextSlide() {
+        currentIndex = (currentIndex < carouselItems.length - 1) ? currentIndex + 1 : 0;
+        updateCarousel();
+      }
+
+      prevButton.addEventListener('click', showPrevSlide);
+      nextButton.addEventListener('click', showNextSlide);
+
+      setInterval(showNextSlide, 3000); // Auto-slide every 3 seconds
+
+      // Typing animation for discount section
+      const texts = ["Limited Time Offer: 50% Off on All Products!", "Exclusive Discount for New Customers!"];
+      let charIndex = 0;
+      let textIndex = 0;
+      let currentText = '';
+      let currentChar = '';
+
+      function type() {
+        if (textIndex === texts.length) {
+          textIndex = 0;
+        }
+        currentText = texts[textIndex];
+        currentChar = currentText.slice(0, ++charIndex);
+        document.querySelector('.typing-text').textContent = currentChar;
+
+        if (currentChar.length === currentText.length) {
+          textIndex++;
+          charIndex = 0;
+          setTimeout(type, 2000); // Pause before typing the next text
+        } else {
+          setTimeout(type, 100);
+        }
+      }
+
+      type();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+  <%- include('../partials/navbar', { title: 'Admin Dashboard' }) %>
+
+  <main class="container">
+    <h1>Admin Dashboard</h1>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingUsers">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
+            Pending  Approvals
+          </button>
+        </h2>
+        <div id="collapseUsers" class="accordion-collapse collapse" aria-labelledby="headingUsers" data-bs-parent="#adminAccordion">
+          <div class="accordion-body">
+            <% if (pendingUsers && pendingUsers.length > 0) { %>
+              <ul class="list-group">
+                <% pendingUsers.forEach(user => { %>
+                  <li class="list-group-item">
+                    <p><strong>Name:</strong> <%= user.name %></p>
+                    <p><strong>Email:</strong> <%= user.email %></p>
+                  </li>
+                <% }) %>
+              </ul>
+            <% } else { %>
+              <p>No pending user approvals.</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

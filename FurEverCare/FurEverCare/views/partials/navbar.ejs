@@ -1,0 +1,88 @@
+<nav class="navbar">
+  <div class="container">
+    <div class="navbar-brand">
+      <a href="/">FurEverCare</a>
+    </div>
+    <div class="navbar-menu">
+      <ul>
+        <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+        <% if (isAuthenticated) { %>
+          <% if (isAdmin) { %>
+            <li class="dropdown">
+              <a href="#" class="dropbtn"><i class="fas fa-boxes"></i> Products</a>
+              <div class="dropdown-content">
+                <a href="/admin/products/add">Add Products</a>
+                <a href="/admin/products">View Products</a>
+              </div>
+            </li>
+            <li><a href="/admin/approve-users"><i class="fas fa-user"></i> Approvals <span class="notification"><%= pendingUserApprovals %></span></a></li>
+          <% } else { %>
+            <li><a href="/user/products"><i class="fas fa-box-open"></i> Products</a></li>
+            <li><a href="/user/cart"><i class="fas fa-shopping-cart"></i> Cart <span class="notification"><%= cartItemCount %></span></a></li>
+            <li><a href="/user/book-doctor"><i class="fas fa-calendar-plus"></i> Book Appointment</a></li>
+            <li><a href="/user/appointments"><i class="fas fa-calendar-check"></i> Booking Status</a></li>
+          <% } %>
+        <% } %>
+      </ul>
+    </div>
+    <div class="navbar-search">
+      <input type="text" name="query" placeholder="Search..." id="search-input">
+      <button onclick="performSearch()"><i class="fas fa-search"></i></button>
+    </div>
+    <% if (isAuthenticated) { %>
+      <div class="profile-dropdown">
+        <img src="/images/prof.jpeg" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
+        <div class="dropdown-content" id="profileDropdown">
+          <p><strong>Username:</strong> <%= user.username %></p>
+          <p><strong>Email:</strong> <%= user.email %></p>
+          <% if (isAdmin) { %>
+            <p><strong>Role:</strong> Admin</p>
+          <% } else { %>
+            <p><strong>Role:</strong> User</p>
+          <% } %>
+          <a href="/user/logout">Logout</a>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="navbar-menu">
+        <ul>
+          <li><a href="/user/signup"><i class="fas fa-user-plus"></i> Signup</a></li>
+          <li><a href="/user/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        </ul>
+      </div>
+    <% } %>
+  </div>
+</nav>
+
+<script>
+  function performSearch() {
+    const query = document.getElementById('search-input').value;
+    if (query) {
+      window.location.href = `/search?query=${query}`;
+    }
+  }
+
+  function toggleDropdown() {
+    const dropdown = document.getElementById('profileDropdown');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+      dropdown.addEventListener('mouseenter', () => {
+        dropdown.querySelector('.dropdown-content').style.display = 'block';
+      });
+      dropdown.addEventListener('mouseleave', () => {
+        dropdown.querySelector('.dropdown-content').style.display = 'none';
+      });
+    });
+
+    // Hide profile dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+      const profileDropdown = document.getElementById('profileDropdown');
+      if (!profileDropdown.contains(event.target) && !event.target.matches('.profile-icon')) {
+        profileDropdown.style.display = 'none';
+      }
+    });
+  });
+</script>

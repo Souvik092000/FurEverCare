@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Search Results</title>
+</head>
+<body>
+  <%- include('partials/navbar', { title: 'Search Results' }) %>
+
+  <main>
+    <h1>Search Results for "<%= query %>"</h1>
+
+    <h2>Products</h2>
+    <% if (products.length > 0) { %>
+      <ul>
+        <% products.forEach(product => { %>
+          <li><a href="/products/<%= product._id %>"><%= product.name %></a></li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No products found.</p>
+    <% } %>
+
+    <h2>Doctors</h2>
+    <% if (doctors.length > 0) { %>
+      <ul>
+        <% doctors.forEach(doctor => { %>
+          <li><a href="/doctors/<%= doctor._id %>"><%= doctor.name %></a></li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <p>No doctors found.</p>
+    <% } %>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>User Dashboard</title>
+</head>
+<body>
+  <%- include('../partials/navbar', { title: 'User Dashboard' }) %>
+
+  <main class="container">
+    <h1>Welcome, <%= user.username %>!</h1>
+    <div class="accordion" id="userAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Your Profile
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#userAccordion">
+          <div class="accordion-body">
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <p><strong>Role:</strong> <%= user.role %></p>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Your Bookings
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#userAccordion">
+          <div class="accordion-body">
+            <% if (bookings && bookings.length > 0) { %>
+              <ul class="list-group">
+                <% bookings.forEach(booking => { %>
+                  <li class="list-group-item">
+                    <% if (booking.doctor) { %>
+                      <p><strong>Doctor:</strong> <%= booking.doctor.name %></p>
+                    <% } else { %>
+                      <p><strong>Doctor:</strong> Doctor information not available</p>
+                    <% } %>
+                    <p><strong>Date:</strong> <%= booking.date.toDateString() %></p>
+                    <p><strong>Status:</strong> <%= booking.status %></p>
+                  </li>
+                <% }) %>
+              </ul>
+            <% } else { %>
+              <p>No bookings found.</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

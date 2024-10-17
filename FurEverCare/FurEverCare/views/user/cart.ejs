@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Cart</title>
+</head>
+<body>
+  <%- include('../partials/navbar', { title: 'Cart' }) %>
+
+  <main class="container">
+    <h1>Your Cart</h1>
+    <% if (cart && cart.items.length > 0) { %>
+      <div class="cards">
+        <% cart.items.forEach(item => { %>
+          <div class="card">
+            <% if (item.product && item.product.image) { %>
+              <img src="/images/<%= item.product.image %>" alt="<%= item.product.name %>">
+            <% } else { %>
+              <img src="/images/default-image.jpg" alt="No image available">
+            <% } %>
+            <div class="card-content">
+              <p><strong>Name:</strong> <%= item.product ? item.product.name : 'Unknown Product' %></p>
+              <p><strong>Price:</strong> $<%= item.product ? item.product.price : 'N/A' %></p>
+              <p><strong>Quantity:</strong> <%= item.quantity %></p>
+              <form action="/user/cart/update" method="POST">
+                <input type="hidden" name="productId" value="<%= item.product ? item.product._id : '' %>">
+                <input type="number" name="quantity" value="<%= item.quantity %>" min="1">
+                <button type="submit" class="btn">Update Quantity</button>
+              </form>
+              <form action="/user/cart/remove/<%= item.product ? item.product._id : '' %>" method="POST">
+                <button type="submit" class="btn">Remove</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <form action="/checkout" method="POST">
+        <button type="submit" class="btn">Checkout</button>
+      </form>
+    <% } else { %>
+      <p>Your cart is empty.</p>
+    <% } %>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>
